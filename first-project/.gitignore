@@ -54,3 +54,9 @@ pids
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# macOS 시스템 파일
+.DS_Store
+
+# JetBrains IDE 설정 디렉토리
+.idea/
