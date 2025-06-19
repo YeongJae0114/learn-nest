@@ -1,0 +1,47 @@
+# User 라는 데이터 타입 정의
+# → DB User Entity와 대응 (id, name, email, password 필드 포함)
+# → 클라이언트가 User 데이터를 받을 때 어떤 필드가 오는지 명시
+type User {
+  id: Int!           # User의 고유 ID (Int, 필수)
+  name: String!      # 이름 (String, 필수)
+  email: String!     # 이메일 (String, 필수)
+  password: String!  # 패스워드 (보통 API에 노출 안하지만, 예제라 일단 포함)
+}
+
+# Query: 데이터를 조회하는 기능 정의
+# REST로 치면 GET /users, GET /user/:id 같은 것
+type Query {
+  user(id: Int!): User           # id로 단일 User 조회
+  users: [User!]!                # 모든 User 목록 조회 (배열로 반환)
+  userByEmail(email: String!): User # 이메일로 User 조회
+}
+
+# CreateUserInput: User를 생성할 때 입력으로 받는 데이터 구조
+# REST에서 CreateUserDto와 동일
+input CreateUserInput {
+  name: String!        # 이름 (필수)
+  email: String!       # 이메일 (필수)
+  password: String!    # 비밀번호 (필수)
+}
+
+# UpdateUserInput: User 수정 시 입력으로 받는 데이터 구조
+# REST에서 UpdateUserDto와 동일
+# 수정이므로 name, password 는 선택적 (필수 아님)
+input UpdateUserInput {
+  name: String         # 이름 (선택)
+  password: String     # 비밀번호 (선택)
+}
+
+# Mutation: 데이터를 변경하는 기능 정의 (생성, 수정, 삭제 등)
+# REST로 치면 POST /users, PATCH /users/:id, DELETE /users/:id 와 대응
+type Mutation {
+  createUser(input: CreateUserInput!): MessageResponse!  # 회원가입
+  updateUser(id: Int!, input: UpdateUserInput!): User!   # 회원 수정
+  deleteUser(id: Int!): Boolean!                         # 회원 삭제
+}
+
+# MessageResponse: 결과 메시지를 전달하는 타입
+# 예를 들어 회원가입 성공 시 "회원가입이 완료되었습니다." 이런 message 반환
+type MessageResponse {
+  message: String!
+}

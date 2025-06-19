@@ -1,0 +1,21 @@
+type Query {
+  me: MeResponse!
+}
+
+type Mutation {
+  login(input: LoginInput!): MessageResponse!
+  logout: MessageResponse!
+}
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type MessageResponse {
+  message: String!
+}
+
+type MeResponse {
+  user: User!
+}
