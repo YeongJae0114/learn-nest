@@ -1,0 +1,33 @@
+type AuthorResponse {
+  id: Int!
+  name: String!
+}
+
+type PostResponse {
+  id: Int!
+  title: String!
+  content: String!
+  createdAt: String!   # Date → ISO String 으로 변환됨
+  author: AuthorResponse!
+}
+
+input CreatePostInput {
+  title: String!
+  content: String!
+}
+
+input UpdatePostInput {
+  title: String
+  content: String
+}
+
+type Query {
+  posts: [PostResponse!]!
+  post(id: Int!): PostResponse
+}
+
+type Mutation {
+  createPost(input: CreatePostInput!): PostResponse!
+  updatePost(id: Int!, input: UpdatePostInput!): PostResponse!
+  deletePost(id: Int!): Boolean!
+}
